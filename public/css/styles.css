@@ -1,0 +1,412 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+
+    /*border: 1px solid red;
+    /**/
+}
+
+body {
+    background-color: #ddd;
+    color: black;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+header {
+    text-align: center;
+    z-index: 1;
+}
+
+main {
+    background-color: #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    max-width: 400px;
+    margin: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    color: #F46530;
+}
+
+.btn {
+    background-color: #F46530;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #f55116 !important;
+}
+
+a {
+    color: #345C72;
+}
+
+#logout{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#logout i{
+    font-size: 30px;
+}
+
+/* menu */
+
+#logo {
+    width: 100px;
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@media(min-width:1109px) {
+    #menu {
+        position: fixed;
+        top: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #logo {
+        width: 100px;
+        margin: 10px;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+}
+
+.bi {
+    font-size: 40px;
+    margin: 5px;
+}
+
+#menu a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    text-decoration: none;
+}
+
+@media(max-width:1108px) {
+    #menu {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #345c72;
+    }
+
+    #menu nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .bi {
+        font-size: 30px;
+    }
+
+    #menu a {
+        font-size: 0;
+        color: white;
+    }
+}
+
+/* editar perfil */
+
+.main {
+    min-height: 100vh;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+#div-foto {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#foto-perfil {
+    width: 100%;
+    position: absolute;
+}
+
+#form-foto {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #345C72;
+    margin: 20px;
+    padding: 0;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+#form-foto label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    color: #345C72;
+}
+
+#form-foto .btn {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    margin: 10px;
+}
+
+.modal-content form {
+    margin: 0;
+    padding: 0;
+}
+
+.info-perfil {
+    margin: 10px;
+    padding: 10px;
+    width: 90%;
+    max-width: 400px;
+    color: #333;
+    background-color: white;
+}
+
+/* feed */
+#feed {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.post {
+    width: 50%;
+    min-width: 300px;
+}
+
+.user-post {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-post img {
+    width: 50px;
+    padding: 2px;
+    border-radius: 100%;
+}
+
+.user-post p {
+    margin: 5px;
+}
+
+.div-post {
+    background-color: white;
+    text-align: center;
+    position: relative;
+}
+
+.div-post p {
+    padding: 10px;
+}
+
+.div-post img {
+    width: 100%;
+}
+
+@media(max-width:1108px) {
+    #feed {
+        margin-top: 80px;
+    }
+}
+
+/* post */
+
+#postar form {
+    gap: 10px;
+    color: #f55116;
+}
+
+#div-img-post {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #345C72;
+}
+
+#div-img-post img {
+    width: 100%;
+}
+
+#div-img-post label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #345C72;
+}
+
+textarea:focus {
+    outline: none;
+    width: 300px;
+}
+
+/* perfil */
+
+#perfil {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+#info-user {
+    border-radius: 5px;
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: white;
+    position: relative;
+    padding: 10px;
+}
+
+.user-post {
+    min-width: 300px;
+}
+
+.user-post i {
+    color: #F46530;
+    font-size: 30px;
+}
+
+#user-desc {
+    margin: 10px;
+}
+
+#area-posts {
+    border-color: #345C72;
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.bloco-post {
+    margin: 10px;
+    width: 300px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.bloco-post img {
+    width: 100%;
+}
+
+.bloco-post p {
+    width: 100%;
+    padding: 10px;
+}
+
+@media(max-width:1108px) {
+    #area-posts {
+        width: 100%;
+    }
+
+    #info-user {
+        margin-top: 40px;
+        width: 300px;
+    }
+}
+
+/* pesquisa */
+
+#pesquisa{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
+
+#form-pesquisa{
+    flex-direction: row;
+    gap: 10px;
+    min-width: 300px;
+    width: 40%;
+    padding: 0;
+    margin-top: 50px;
+}
+
+#resultados-pesquisa{
+    min-width: 300px;
+    width: 40%;
+    background-color: white;
+    padding: 10px;
+}
+
+.bloco-pesquisado{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+    padding: 0;
+    position: relative;
+}
+
+.bloco-pesquisado p{
+    margin: 0;
+}
+
+.bloco-pesquisado img{
+    width: 50px;
+}
+
+.bloco-pesquisado hr{
+    width: 100%;
+}
+
+.bloco-pesquisado button{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="imgs/icon.png">
+    <link rel="apple-touch-icon" href="imgs/icon.png" />
+    <link rel="shortcut icon" href="imgs/icon.png">
+    <link rel="icon" type="image/x-icon" href="imgs/icon.png">
+    <title>PhotoLine | Meu Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Honk&family=Madimi+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body id="body">
+    <img id="logo" src="imgs/logo.png" alt="logo photoline">
+    <header id="menu">
+        <nav>
+            <a href="/feed"><i class="bi bi-house-door-fill"></i>Feed</a>
+            <a href="/pesquisa"><i class="bi bi-search"></i>Buscar</a>
+            <a href="/postagem"><i class="bi bi-plus-square"></i>Publicar</a>
+            <a href="/curtidas"><i class="bi bi-heart-fill"></i>Curtidas</a>
+            <a href="/perfil"><i class="bi bi-person-circle"></i>Perfil</a>
+        </nav>
+    </header>
+    <main class="main">
+        <form id="form-foto" action="/perfil/foto" method="post" enctype="multipart/form-data">
+            <div id="div-foto">
+                <img src="imgs/avatar.png" id="foto-perfil" alt="foto do perfil">
+                <label for="inp-foto" style="z-index: 1;"><i class="bi bi-plus-circle-fill"></i></label>
+                <input type="file" name="foto" id="inp-foto" style="display: none;">
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+
+        <div class="info-perfil">
+            <h4>
+                <strong>Descrição</strong>
+            </h4>
+            <p>
+                Eu sou um desenvolvedor web de node.js que gosta de compartilhar fotos.
+            </p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Editar Descrição
+            </button>
+        </div>
+
+        <!-- Modal Descrição-->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="/user/update" method="post">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Atualizar Descrição</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label">Descrição:</label>
+                                <textarea name="descricao" class="form-control" id="descricao" placeholder="Insira a descrição do seu perfil..."></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="reset" class="btn btn-primary">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-perfil">
+            <h4><strong>Informações Pessoais</strong></h4>
+            <p>
+                <strong>Nome:</strong>
+                    <%= usuario.nome %> 
+            </p>
+            <p>
+                <strong>E-mail:</strong>
+                <%= usuario.email %>
+            </p>
+            <p>
+                <strong>Senha:</strong>
+                <%= usuario.senha %>
+            </p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-perfil">
+                Editar Minhas Informações
+            </button>
+        </div>
+
+        <!-- Modal Informações-->
+        <div class="modal fade" id="info-perfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="/user/update" method="post">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Atualizar Informações</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="nomeUser" class="form-label">Nome Completo</label>
+                                <input type="text" name="nome" class="form-control" id="nomeUser"
+                                    placeholder="Tony Stark">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="Ex: ironman@gmail.com">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Senha</label>
+                                <input type="password" name="senha" class="form-control" id="exampleInputPassword1"
+                                    placeholder="Crie uma senha">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword2" class="form-label">Repita a Senha</label>
+                                <input type="password" name="confirmaSenha" class="form-control"
+                                    id="exampleInputPassword2" placeholder="Confirme sua senha">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="reset" class="btn btn-primary">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const inputImagem = document.getElementById('inp-foto');
+        inputImagem.addEventListener('change', function (event) {
+            if (inputImagem.files && inputImagem.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imagemPreview = document.getElementById('foto-perfil');
+                    imagemPreview.src = e.target.result;
+                }
+                reader.readAsDataURL(inputImagem.files[0]);
+            }
+            document.querySelector('.bi-plus-circle-fill').style.opacity = '0';
+        });
+    </script>
+</body>
+
+</html>
