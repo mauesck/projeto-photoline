@@ -27,8 +27,8 @@ exports.getLogin = (email, senha, callback) => {
 
 
 // Update
-exports.updateUser = (id, nome, email, senha, callback) => {
-    db.query('UPDATE users SET nome = ?, email = ?, senha = ? WHERE id = ?', [nome, email, senha, id], (err, result) => {
+exports.updateUser = (id, nome, email, senha, foto, descricao, callback) => {
+    db.query('UPDATE users SET nome = ?, email = ?, senha = ?, foto = ?, descricao = ? WHERE id = ?', [nome, email, senha, foto, descricao, id], (err, result) => {
         if (err) throw err;
         callback(result.affectedRows > 0);
     });

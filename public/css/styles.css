@@ -201,6 +201,10 @@ a {
     background-color: white;
 }
 
+.modal form{
+    max-width: none;
+}
+
 /* feed */
 #feed {
     display: flex;
@@ -223,6 +227,7 @@ a {
 
 .user-post img {
     width: 50px;
+    height: 50px;
     padding: 2px;
     border-radius: 100%;
 }
@@ -252,6 +257,11 @@ a {
 }
 
 /* post */
+
+#postar {
+    justify-content: start;
+    margin-top: 40px;
+}
 
 #postar form {
     gap: 10px;
@@ -285,7 +295,6 @@ a {
 
 textarea:focus {
     outline: none;
-    width: 300px;
 }
 
 /* perfil */
@@ -377,6 +386,7 @@ textarea:focus {
 
 #resultados-pesquisa{
     min-width: 300px;
+    max-width: 400px;
     width: 40%;
     background-color: white;
     padding: 10px;

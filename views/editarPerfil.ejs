@@ -35,21 +35,32 @@
         </nav>
     </header>
     <main class="main">
-        <form id="form-foto" action="/perfil/foto" method="post" enctype="multipart/form-data">
+        <form id="form-foto" action="/user/update" method="post" enctype="multipart/form-data">
             <div id="div-foto">
-                <img src="imgs/avatar.png" id="foto-perfil" alt="foto do perfil">
+                <input type="int" name="id" value="<%= usuario.usuario.id %>" style="display: none;">
+                <input type="text" name="nome" value="<%= usuario.usuario.nome %>" style="display: none;">
+                <input type="email" name="email" value="<%= usuario.usuario.email %>" style="display: none;">
+                <input type="password" name="senha" value="<%= usuario.usuario.senha %>" style="display: none;">
+                <textarea type="text" name="descricao" value="<%= usuario.usuario.descricao %>" style="display: none;"></textarea>
+                <% console.log(usuario) %>
+                <img src="<%= usuario.foto %>" id="foto-perfil" alt="foto do perfil">
                 <label for="inp-foto" style="z-index: 1;"><i class="bi bi-plus-circle-fill"></i></label>
                 <input type="file" name="foto" id="inp-foto" style="display: none;">
             </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
-
+        <% if (typeof error !== 'undefined') { %>
+            <p style="color: red;">
+                <%= error %>
+            </p>
+        <% } %>
+        
         <div class="info-perfil">
             <h4>
                 <strong>Descrição</strong>
             </h4>
             <p>
-                Eu sou um desenvolvedor web de node.js que gosta de compartilhar fotos.
+                <%= usuario.usuario.descricao %>
             </p>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Editar Descrição
@@ -68,8 +79,13 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
+                                <input type="int" name="id" value="<%= usuario.usuario.id %>" style="display: none;">
+                                <input type="text" name="nome" value="<%= usuario.usuario.nome %>" style="display: none;">
+                                <input type="email" name="email" value="<%= usuario.usuario.email %>" style="display: none;">
+                                <input type="password" name="senha" value="<%= usuario.usuario.senha %>" style="display: none;">
+                                <input type="text" name="foto" value="<%= usuario.usuario.foto %>" style="display: none;">
                                 <label for="descricao" class="form-label">Descrição:</label>
-                                <textarea name="descricao" class="form-control" id="descricao" placeholder="Insira a descrição do seu perfil..."></textarea>
+                                <textarea type="text" name="descricao" class="form-control" id="descricao" placeholder="Insira a descrição do seu perfil..."></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -85,15 +101,15 @@
             <h4><strong>Informações Pessoais</strong></h4>
             <p>
                 <strong>Nome:</strong>
-                    <%= usuario.nome %> 
+                <%= usuario.usuario.nome %>
             </p>
             <p>
                 <strong>E-mail:</strong>
-                <%= usuario.email %>
+                <%= usuario.usuario.email %>
             </p>
             <p>
                 <strong>Senha:</strong>
-                <%= usuario.senha %>
+                <%= usuario.usuario.senha %>
             </p>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-perfil">
                 Editar Minhas Informações

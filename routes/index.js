@@ -9,46 +9,37 @@ const User = require('../controller/usuario');
 router.get('/user/read', authMiddleware, User.getUser);
 router.post('/user/login', User.login);
 router.post('/user/create', User.createUser);
-
-// rotas item
-/*router.get('/postagem/read', authMiddleware, Post.getAllItens);
-//router.post('/item/create', Item.createItem);
-router.post('/postagem/create', (req, res) => {
-    console.log('ROUTES');
-    console.log(req.body);
+router.post('/user/update', (req, res) => {
 
     // Verifica se o arquivo de imagem foi enviado na solicitação
-    if (!req.files || !req.files.imagem) {
-        return res.status(400).send('Nenhum arquivo de imagem enviado.');
+    if (!req.files || !req.files.foto) {
+        if (!req.body.descricao) {
+            //return res.status(400).send('Nenhum arquivo de imagem enviado.');
+            return res.redirect('/editarPerfil?error=Nenhuma foto a ser salva');
+        }
     }
 
     // Extrai os dados do corpo da solicitação
-    const { nome, descricao, usuario_id, categoria_id } = req.body;
+    const { id, nome, email, senha, foto, descricao } = req.body;
 
-    // Extrai o arquivo de imagem da solicitação
-    const imagem = req.files.imagem;
-
-    // Define o diretório de uploads
-    const uploadDir = path.join(__dirname, '..', 'public', 'imgs', 'uploads');
-
-    // Move o arquivo de imagem para o diretório de uploads
-    imagem.mv(path.join(uploadDir, imagem.name), (err) => {
-        if (err) {
-            console.error('Erro ao mover o arquivo de imagem:', err);
-            return res.status(500).send("Ocorreu um erro ao criar o item.");
-        }
-
-        // Chama a função 'createItem' passando todos os dados necessários
-        Item.createItem(nome, imagem.name, descricao, usuario_id, categoria_id, (insertId) => {
-            if (err) {
-                console.error('Erro ao criar o item:', err);
-                return res.status(500).send("Ocorreu um erro ao criar o item.");
-            }
-            // Se não houver erros, envia uma resposta de sucesso
-            return res.redirect('/adm');
+    if (!req.body.descricao) {
+        // Extrai o arquivo de imagem da solicitação
+        const foto = req.files.foto;
+        const fotoName = 'foto-perfil' + foto.name;
+        // Define o diretório de uploads
+        const uploadDir = path.join(__dirname, '..', 'public', 'imgs', 'uploads');
+        // Move o arquivo de imagem para o diretório de uploads
+        foto.mv(path.join(uploadDir, fotoName), (err) => {
+            User.updateUser(id, nome, email, senha, fotoName, descricao, res, (success) => {
+                return res.redirect('/editarPerfil');
+            });
         });
-    });
-});*/
+    } else {
+        User.updateUser(id, nome, email, senha, foto, descricao, res, (success) => {
+            return res.redirect('/editarPerfil');
+        });
+    }
+});
 
 // --- rota efetuar Logout
 router.get('/logout', (req, res) => {
@@ -131,11 +122,13 @@ router.get('/editarPerfil', async (req, res) => {
         return;
     }
 
+    const error = req.query.error;
+
     try {
         const userDataPromise = User.getUser(req, res);
         const [userData] = await Promise.all([userDataPromise]);
 
-        res.render('editarPerfil', { usuario: userData });
+        res.render('editarPerfil', { usuario: userData, error: error });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);

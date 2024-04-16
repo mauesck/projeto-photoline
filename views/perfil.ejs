@@ -39,9 +39,9 @@
         <section id="info-user">
             <a href="/logout" id="logout"><i class="bi bi-box-arrow-right"></i></a>
             <div class="user-post">
-                <img src="imgs/avatar.png" alt="user-post">
+                <img src="<%= usuario.foto %>" alt="user-post">
                 <% if (usuario) { %>
-                    <p> <%= usuario.nome %> </p>
+                    <p> <%= usuario.usuario.nome %> </p>
                     <% } %>
                 <a href="/editarPerfil"><i class="bi bi-pencil-square"></i></a>
             </div>
