@@ -38,12 +38,17 @@ exports.getUser = (req, res) => {
 exports.getUserPesquisado = (req, res) => {
     return new Promise((resolve, reject) => {
         usuario_id = req.query.id;
-
-        console.log('aqui')
-        console.log(req.query);
+        console.log(req.query)
 
         Users.getUser(usuario_id, (usuario) => {
-            resolve({ usuario: usuario });
+            var foto;
+            if (usuario.foto) {
+                foto = 'imgs/uploads/' + usuario.foto;
+            } else {
+                foto = 'imgs/avatar.png';
+            }
+
+            resolve({ usuario: usuario, foto: foto });
         });
     });
 };
@@ -53,7 +58,15 @@ exports.getAllUsers = (req, res) => {
         usuario_id = req.session.usuario.id;
 
         Users.getAllUsers(usuario_id, (allUsers) => {
-            resolve({ allUsers: allUsers });
+            var foto;
+            var opacity;
+            if (allUsers.foto) {
+                foto = 'imgs/uploads/' + usuario.foto;
+            } else {
+                foto = 'imgs/avatar.png';
+            }
+
+            resolve({ allUsers: allUsers, foto: foto });
         });
     });
 };

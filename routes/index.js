@@ -126,8 +126,6 @@ router.get('/perfilPublico', async (req, res) => {
 
         const [usuario] = await Promise.all([usersPromise]);
 
-        console.log(usuario);
-
         res.render('perfilPublico', { usuario: usuario });
 
     } catch (error) {

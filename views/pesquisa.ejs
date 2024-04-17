@@ -44,7 +44,7 @@
         <section id="resultados-pesquisa">
             <% allUsers.allUsers.forEach(usuario => { %>
             <form action="/perfilPublico" method="get" class="bloco-pesquisado">
-                <img src="imgs/uploads/<%=usuario.foto%>" alt="user pesquisado">
+                <img src="<%= allUsers.foto %>" alt="user pesquisado">
                 <p><%= usuario.nome %></p>
                 <input type="text" name="id" value="<%= usuario.id %>" style="display: none;">
                 <button type="submit">Ver perfil user</button>
