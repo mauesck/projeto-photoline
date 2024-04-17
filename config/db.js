@@ -5,7 +5,8 @@ const db = mysql.createConnection({
   host: 'localhost',       // Host do banco de dados
   user: 'root',     // Nome de usuário do banco de dados
   password: 'root',   // Senha do banco de dados
-  database: 'photoline'  // Nome do banco de dados
+  database: 'photoline',  // Nome do banco de dados
+  charset: 'utf8mb4' // Especifique a codificação UTF-8
 });
 
 // Conecta-se ao banco de dados

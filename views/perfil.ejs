@@ -40,13 +40,11 @@
             <a href="/logout" id="logout"><i class="bi bi-box-arrow-right"></i></a>
             <div class="user-post">
                 <img src="<%= usuario.foto %>" alt="user-post">
-                <% if (usuario) { %>
                     <p> <%= usuario.usuario.nome %> </p>
-                    <% } %>
                 <a href="/editarPerfil"><i class="bi bi-pencil-square"></i></a>
             </div>
             <div id="user-desc">
-                Eu sou um desenvolvedor web de node.js que gosta de compartilhar fotos Eu sou um desenvolvedor web de node.js que gosta de compartilhar fotos.
+                <%= usuario.usuario.descricao %>                
             </div>
         </section>
         <section id="area-posts">

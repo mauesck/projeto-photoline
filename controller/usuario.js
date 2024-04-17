@@ -10,22 +10,26 @@ exports.createUser = (req, res) => {
 };
 
 // Read
+var usuario_id;
 exports.getUser = (req, res) => {
     return new Promise((resolve, reject) => {
-        const usuario_id = req.session.usuario.id;
+        usuario_id = req.session.usuario.id;
 
         Users.getUser(usuario_id, (usuario) => {
-            
+        
             // Define a foto ou avatar.png
-            var foto = '';
+            var foto;
+            var opacity;
             if (usuario.foto) {
                 foto = 'imgs/uploads/' + usuario.foto;
+                opacity = 'opacity: 0;';
             } else {
                 foto = 'imgs/avatar.png';
+                opacity = 'opacity: 1;';
             }
 
             // Passando os dados ao parametro 'usuario'
-            resolve({ usuario: usuario, foto: foto });
+            resolve({ usuario: usuario, foto: foto, opacity: opacity });
         });
     });
 };
@@ -47,9 +51,12 @@ exports.login = (req, res) => {
 
 // Update
 exports.updateUser = (id, nome, email, senha, foto, descricao, res) => {
-    console.log('Up User');
-    console.log(id, nome, email, senha, foto, descricao,);
+    /*Users.getUser(usuario_id, (usuario) => {
+    });*/
 
+    console.log('\n updateUser:');
+    console.log(id, nome, email, senha, foto, descricao);
+    
     Users.updateUser(id, nome, email, senha, foto, descricao, (success) => {
         res.redirect('/editarPerfil');
     });

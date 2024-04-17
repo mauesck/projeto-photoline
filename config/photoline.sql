@@ -10,7 +10,7 @@ create table users (
     email VARCHAR(255) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     foto text,
-    descricao text
+	descricao TEXT CHARACTER SET utf8mb4
 );
 
 create table postagem (
@@ -22,3 +22,5 @@ create table postagem (
 );
 
 select * from users;
+
+alter table users modify descricao text character set utf8mb4;

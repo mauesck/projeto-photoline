@@ -3,7 +3,11 @@ const router = express.Router();
 const authMiddleware = require('../middleware/auth');
 const path = require('path');
 
+// Objetos do controller
 const User = require('../controller/usuario');
+
+// Recebe o id do user logado
+var usuario;
 
 // rotas usuario
 router.get('/user/read', authMiddleware, User.getUser);
@@ -13,25 +17,30 @@ router.post('/user/update', (req, res) => {
 
     console.log('\n/user/update\n');
 
-    console.log(req.body);
-
     // Verifica se o arquivo de imagem foi enviado na solicitação
     if (!req.files || !req.files.foto) {
-        if (!req.body.descricao) {
-            //return res.status(400).send('Nenhum arquivo de imagem enviado.');
+        if (req.body.foto === undefined) {
+            console.log('aqui');
             return res.redirect('/editarPerfil?error=Nenhuma foto a ser salva');
         }
     }
 
     // Extrai os dados do corpo da solicitação
     const { id, nome, email, senha, foto, descricao } = req.body;
+    console.log(req.body.foto)
 
-    if (!req.body.descricao) {
+    if (req.body.foto === undefined) {
+
+        console.log('entrou');
+
         // Extrai o arquivo de imagem da solicitação
         const foto = req.files.foto;
-        const fotoName = 'foto-perfil' + foto.name;
+        const extensao = foto.name.split('.').pop();
+        const fotoName = 'iduser' + usuario.id + '-fotoperfil.' + extensao;
+
         // Define o diretório de uploads
         const uploadDir = path.join(__dirname, '..', 'public', 'imgs', 'uploads');
+
         // Move o arquivo de imagem para o diretório de uploads
         foto.mv(path.join(uploadDir, fotoName), (err) => {
             User.updateUser(id, nome, email, senha, fotoName, descricao, res, (success) => {
@@ -81,7 +90,7 @@ router.get('/postagem', (req, res) => {
 
 // --- renderizar pagina de editar pesquisa
 router.get('/pesquisa', async (req, res) => {
-    const usuario = req.session.usuario;
+    usuario = req.session.usuario;
     if (!usuario) {
         res.redirect('/');
         return;
@@ -101,7 +110,7 @@ router.get('/pesquisa', async (req, res) => {
 
 // --- renderizar pagina de editar perfil
 router.get('/perfil', async (req, res) => {
-    const usuario = req.session.usuario;
+    usuario = req.session.usuario;
     if (!usuario) {
         res.redirect('/');
         return;
@@ -121,7 +130,7 @@ router.get('/perfil', async (req, res) => {
 
 // --- renderizar pagina de editar perfil
 router.get('/editarPerfil', async (req, res) => {
-    const usuario = req.session.usuario;
+    usuario = req.session.usuario;
     if (!usuario) {
         res.redirect('/');
         return;
@@ -144,7 +153,7 @@ router.get('/editarPerfil', async (req, res) => {
 // --- renderizar pagina de Adm
 router.get('/feed', async (req, res) => {
     // Verifica se há informações do usuário na sessão
-    const usuario = req.session.usuario;
+    usuario = req.session.usuario;
     if (!usuario) {
         // Se não houver informações do usuário na sessão, redireciona de volta para a página de login
         res.redirect('/');
