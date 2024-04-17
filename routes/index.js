@@ -11,6 +11,10 @@ router.post('/user/login', User.login);
 router.post('/user/create', User.createUser);
 router.post('/user/update', (req, res) => {
 
+    console.log('\n/user/update\n');
+
+    console.log(req.body);
+
     // Verifica se o arquivo de imagem foi enviado na solicitação
     if (!req.files || !req.files.foto) {
         if (!req.body.descricao) {
@@ -35,6 +39,7 @@ router.post('/user/update', (req, res) => {
             });
         });
     } else {
+        console.log(2)
         User.updateUser(id, nome, email, senha, foto, descricao, res, (success) => {
             return res.redirect('/editarPerfil');
         });

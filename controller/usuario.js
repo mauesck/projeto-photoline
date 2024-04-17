@@ -47,8 +47,6 @@ exports.login = (req, res) => {
 
 // Update
 exports.updateUser = (id, nome, email, senha, foto, descricao, res) => {
-    
-    
     console.log('Up User');
     console.log(id, nome, email, senha, foto, descricao,);
 
