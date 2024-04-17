@@ -172,6 +172,25 @@
                     </div>
                 </div>
 
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-deletar" style="background-color: red;">Excluir minha Conta</button>
+                <div class="modal fade" id="modal-deletar" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <form action="/user/delete" method="post">
+                                <input type="int" name="id" value="<%= usuario.usuario.id %>" style="display: none;">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmar Exclusão da Conta?</h1>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" style="background-color: red;">Confirmar</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
     </main>
 
     <script>

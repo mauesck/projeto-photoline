@@ -17,6 +17,14 @@ exports.getUser = (id, callback) => {
     });
 };
 
+
+exports.getAllUsers = (id, callback) => {
+    db.query('SELECT * FROM users', (err, rows) => {
+        if(err) throw err;
+        callback(rows);
+    });
+};
+
 exports.getLogin = (email, senha, callback) => {
     db.query('SELECT * FROM users WHERE email = ? AND senha = ?', [email, senha], (err, rows) => {
         if (err) throw err;

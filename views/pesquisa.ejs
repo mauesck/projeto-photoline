@@ -36,19 +36,21 @@
     </header>
 
     <main id="pesquisa" class="main">
-        <form action="/user/pesquisa" method="get" id="form-pesquisa">
+        <form action="/perfilPublico" method="get" id="form-pesquisa">
             <input type="text" name="nome" class="form-control" id="exampleInputEmail1"
                 placeholder="Pesquise alguém aqui">
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
         <section id="resultados-pesquisa">
-            <form action="/user/pesquisar" method="get" class="bloco-pesquisado">
-                <img src="imgs/avatar.png" alt="user pesquisado">
+            <% allUsers.allUsers.forEach(usuario => { %>
+            <form action="/perfilPublico" method="get" class="bloco-pesquisado">
+                <img src="imgs/uploads/<%=usuario.foto%>" alt="user pesquisado">
                 <p><%= usuario.nome %></p>
-                <input type="text" name="nome" value="<%= usuario.id %>" style="display: none;">
+                <input type="text" name="id" value="<%= usuario.id %>" style="display: none;">
                 <button type="submit">Ver perfil user</button>
             </form>
             <hr>
+            <% }); %>
         </section>
     </main>
 

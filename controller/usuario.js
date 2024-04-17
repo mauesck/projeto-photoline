@@ -1,5 +1,7 @@
 const Users = require('../model/usuario');
 
+var usuario_id;
+
 // Create
 exports.createUser = (req, res) => {
     const { nome, email, senha } = req.body;
@@ -10,13 +12,12 @@ exports.createUser = (req, res) => {
 };
 
 // Read
-var usuario_id;
 exports.getUser = (req, res) => {
     return new Promise((resolve, reject) => {
         usuario_id = req.session.usuario.id;
 
         Users.getUser(usuario_id, (usuario) => {
-        
+
             // Define a foto ou avatar.png
             var foto;
             var opacity;
@@ -30,6 +31,29 @@ exports.getUser = (req, res) => {
 
             // Passando os dados ao parametro 'usuario'
             resolve({ usuario: usuario, foto: foto, opacity: opacity });
+        });
+    });
+};
+
+exports.getUserPesquisado = (req, res) => {
+    return new Promise((resolve, reject) => {
+        usuario_id = req.query.id;
+
+        console.log('aqui')
+        console.log(req.query);
+
+        Users.getUser(usuario_id, (usuario) => {
+            resolve({ usuario: usuario });
+        });
+    });
+};
+
+exports.getAllUsers = (req, res) => {
+    return new Promise((resolve, reject) => {
+        usuario_id = req.session.usuario.id;
+
+        Users.getAllUsers(usuario_id, (allUsers) => {
+            resolve({ allUsers: allUsers });
         });
     });
 };
@@ -56,7 +80,7 @@ exports.updateUser = (id, nome, email, senha, foto, descricao, res) => {
 
     console.log('\n updateUser:');
     console.log(id, nome, email, senha, foto, descricao);
-    
+
     Users.updateUser(id, nome, email, senha, foto, descricao, (success) => {
         res.redirect('/editarPerfil');
     });

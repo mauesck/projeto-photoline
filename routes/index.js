@@ -11,6 +11,8 @@ var usuario;
 
 // rotas usuario
 router.get('/user/read', authMiddleware, User.getUser);
+router.get('/user/allRead', User.getAllUsers);
+router.post('/user/delete', User.deleteUser);
 router.post('/user/login', User.login);
 router.post('/user/create', User.createUser);
 router.post('/user/update', (req, res) => {
@@ -98,9 +100,35 @@ router.get('/pesquisa', async (req, res) => {
 
     try {
         const userDataPromise = User.getUser(req, res);
-        const [userData] = await Promise.all([userDataPromise]);
+        const usersPromise = User.getAllUsers(req, res);
 
-        res.render('pesquisa', { usuario: userData });
+        const [userData, allUsers] = await Promise.all([userDataPromise, usersPromise]);
+
+        res.render('pesquisa', { usuario: userData, allUsers: allUsers });
+
+    } catch (error) {
+        console.error('Erro ao renderizar a página:', error);
+        res.status(500).send('Erro ao renderizar a página');
+    }
+});
+
+// --- renderizar perfil publico ao pesquisar user
+router.get('/perfilPublico', async (req, res) => {
+
+    usuario = req.session.usuario;
+    if (!usuario) {
+        res.redirect('/');
+        return;
+    }
+
+    try {
+        const usersPromise = User.getUserPesquisado(req, res);
+
+        const [usuario] = await Promise.all([usersPromise]);
+
+        console.log(usuario);
+
+        res.render('perfilPublico', { usuario: usuario });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);

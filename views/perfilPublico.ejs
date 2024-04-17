@@ -38,13 +38,11 @@
     <main id="perfil" class="main">
         <section id="info-user">
             <div class="user-post">
-                <img src="imgs/avatar.png" alt="user-post">
-                <% if (usuario) { %>
-                    <p> <%= usuario.nome %> </p>
-                    <% } %>
+                <img src="imgs/uploads/<%=usuario.usuario.foto%>" alt="user-post">
+                <p> <%= usuario.usuario.nome %> </p>
             </div>
             <div id="user-desc">
-                Eu sou um desenvolvedor web de node.js que gosta de compartilhar fotos Eu sou um desenvolvedor web de node.js que gosta de compartilhar fotos.
+                <%= usuario.usuario.descricao %>
             </div>
         </section>
         <section id="area-posts">
