@@ -24,3 +24,5 @@ create table postagem (
 select * from users;
 
 alter table users modify descricao text character set utf8mb4;
+
+delete from users where id in (1,2,5);

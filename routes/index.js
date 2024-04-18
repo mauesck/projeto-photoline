@@ -5,13 +5,22 @@ const path = require('path');
 
 // Objetos do controller
 const User = require('../controller/usuario');
+const { json } = require('body-parser');
 
 // Recebe o id do user logado
 var usuario;
 
 // rotas usuario
 router.get('/user/read', authMiddleware, User.getUser);
-router.get('/user/allRead', User.getAllUsers);
+//router.get('/user/allRead', User.getAllUsers);
+// router.get('/user/allRead', async (req, res) => {
+//     try {
+//         const allUsers = await User.getAllUsers(req, res);
+//         res.json(allUsers);
+//     } catch (error) {
+//         res.status(500).json({ error: 'Erro ao buscar usuários.' });
+//     }
+// });
 router.post('/user/delete', User.deleteUser);
 router.post('/user/login', User.login);
 router.post('/user/create', User.createUser);
@@ -38,7 +47,7 @@ router.post('/user/update', (req, res) => {
         // Extrai o arquivo de imagem da solicitação
         const foto = req.files.foto;
         const extensao = foto.name.split('.').pop();
-        const fotoName = 'iduser' + usuario.id + '-fotoperfil.' + extensao;
+        const fotoName = 'id' + usuario.id + '-user' + usuario.nome + '-fotoperfil.' + extensao;
 
         // Define o diretório de uploads
         const uploadDir = path.join(__dirname, '..', 'public', 'imgs', 'uploads');
@@ -56,6 +65,9 @@ router.post('/user/update', (req, res) => {
         });
     }
 });
+
+// rotas postagem
+
 
 // --- rota efetuar Logout
 router.get('/logout', (req, res) => {
@@ -90,7 +102,7 @@ router.get('/postagem', (req, res) => {
     res.render('postar');
 });
 
-// --- renderizar pagina de editar pesquisa
+// --- renderizar pagina de pesquisa
 router.get('/pesquisa', async (req, res) => {
     usuario = req.session.usuario;
     if (!usuario) {
@@ -104,6 +116,8 @@ router.get('/pesquisa', async (req, res) => {
 
         const [userData, allUsers] = await Promise.all([userDataPromise, usersPromise]);
 
+        console.log(allUsers);
+
         res.render('pesquisa', { usuario: userData, allUsers: allUsers });
 
     } catch (error) {
@@ -114,7 +128,6 @@ router.get('/pesquisa', async (req, res) => {
 
 // --- renderizar perfil publico ao pesquisar user
 router.get('/perfilPublico', async (req, res) => {
-
     usuario = req.session.usuario;
     if (!usuario) {
         res.redirect('/');
@@ -189,15 +202,9 @@ router.get('/feed', async (req, res) => {
     try {
         // Executa as duas operações em paralelo
         const userDataPromise = User.getUser(req, res);
-        /*const categoriasPromise = Categoria.getAllCategoria(req, res);
-        const itensPromise = Item.getAllItens(req, res);*/
 
-        // Espera que ambas as operações sejam concluídas
-        //const [userData, categorias, itens] = await Promise.all([userDataPromise, categoriasPromise, itensPromise]);
         const [userData] = await Promise.all([userDataPromise]);
 
-        // Renderiza a página de administração com os dados obtidos
-        //res.render('feed', { usuario: userData, categorias: categorias, itens: itens });
         res.render('feed', { usuario: userData });
 
     } catch (error) {

@@ -1,0 +1,14 @@
+                
+
+                 <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.foto').forEach(function (element) {
+                
+                element.src = 'imgs/uploads/';
+                
+                if (element.src.match(/imgs\/uploads\/$/)) {
+                    element.src = 'imgs/avatar.png'
+                }
+            });
+        });
+    </script>

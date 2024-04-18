@@ -58,15 +58,17 @@ exports.getAllUsers = (req, res) => {
         usuario_id = req.session.usuario.id;
 
         Users.getAllUsers(usuario_id, (allUsers) => {
-            var foto;
-            var opacity;
-            if (allUsers.foto) {
-                foto = 'imgs/uploads/' + usuario.foto;
-            } else {
-                foto = 'imgs/avatar.png';
-            }
-
-            resolve({ allUsers: allUsers, foto: foto });
+            /*let foto = [];
+            for(var i = 0; i < allUsers.length; i++){
+                if (allUsers[i].foto) {
+                    foto[i] = 'imgs/uploads/' + allUsers[i].foto;
+                } else {
+                    foto[i] = 'imgs/avatar.png';
+                }
+                console.log(foto[i])
+            };*/
+            //resolve({ allUsers: allUsers, foto: foto });
+            resolve({ allUsers: allUsers });
         });
     });
 };

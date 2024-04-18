@@ -42,17 +42,48 @@
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
         <section id="resultados-pesquisa">
-            <% allUsers.allUsers.forEach(usuario => { %>
-            <form action="/perfilPublico" method="get" class="bloco-pesquisado">
-                <img src="<%= allUsers.foto %>" alt="user pesquisado">
-                <p><%= usuario.nome %></p>
-                <input type="text" name="id" value="<%= usuario.id %>" style="display: none;">
-                <button type="submit">Ver perfil user</button>
-            </form>
-            <hr>
-            <% }); %>
+            <% allUsers.allUsers.forEach(usuario=> { %>
+                <form action="/perfilPublico" method="get" class="bloco-pesquisado">
+                    <% var foto; %>
+                    <% if (usuario.foto) { %>
+                        <% foto='imgs/uploads/' + usuario.foto; %>
+                    <% } else { %>
+                        <% foto='imgs/avatar.png' ; %>
+                    <% } %>
+                    <img class="foto" src="<%= foto %>" alt="user pesquisado">
+                    <p><%= usuario.nome %></p>
+                    <input type="text" name="id" value="<%= usuario.id %>" style="display: none;">
+                    <button type="submit">Ver perfil user</button>
+                </form>
+                <hr>
+                <% }); %>
         </section>
     </main>
+
+    <script>
+
+        // fetch('/user/allRead')
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('Erro ao buscar usuários.');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         // Manipular os dados recebidos, por exemplo:
+        //         console.log(data.allUsers);
+
+        //         const foto = document.querySelector('.foto');
+
+        //         for (let index = 0; index < data.allUsers.length; index++) {
+        //             foto.src = data.allUsers[index].foto;
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Erro:', error);
+        //     });
+
+    </script>
 
 </body>
 
