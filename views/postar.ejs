@@ -36,16 +36,23 @@
     </header>
 
     <main id="postar" class="main">
-        <form action="/postagem" method="post" enctype="multipart/form-data">
+        <form action="/postagem/create" method="post" enctype="multipart/form-data">
             <h4>Publicação</h4>
             <div id="div-img-post">
                 <img src="" id="foto-postagem">
                 <label for="inp-foto" style="z-index: 1;"><i class="bi bi-plus-circle-fill"></i></label>
-                <input type="file" name="foto-postagem" id="inp-foto" style="display: none;">
+                <input type="file" name="imagem" id="inp-foto" style="display: none;">
             </div>
-            <textarea name="descricao-postagem" id="desc" cols="30" rows="3" placeholder="Escreva algo aqui..."></textarea>
+            <textarea name="descricao" id="desc" cols="30" rows="3"
+                placeholder="Escreva algo aqui..." required>O Kyle é um judeuzinho de merda hehe</textarea>
+            <input type="int" name="user_id" value="<%= usuario.usuario.id %>" style="display: none;">
             <button type="submit" class="btn btn-primary">Publicar</button>
         </form>
+        <% if (typeof error !=='undefined' ) { %>
+            <p style="color: red;">
+                <%= error %>
+            </p>
+            <% } %>
     </main>
 
     <script>

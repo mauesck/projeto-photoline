@@ -48,12 +48,13 @@
             </div>
         </section>
         <section id="area-posts">
+            <% post.posts.forEach(post =>{ %>
             <div class="bloco-post">
-                <img src="imgs/pexels-johannes-plenio-2080960.jpg" alt="post">
-                <p>Esta é a foto de uma paisagem linda, um simples pescador e seu barco desfrutando da beleza do planeta
-                </p>
+                <img src="imgs/uploads/posts/<%= post.imagem %>" alt="post">
+                <p><%= post.descricao %></p>
                 <i class="bi bi-heart"></i>
             </div>
+            <% }); %>
         </section>
     </main>
 

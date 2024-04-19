@@ -56,18 +56,7 @@ exports.getUserPesquisado = (req, res) => {
 exports.getAllUsers = (req, res) => {
     return new Promise((resolve, reject) => {
         usuario_id = req.session.usuario.id;
-
         Users.getAllUsers(usuario_id, (allUsers) => {
-            /*let foto = [];
-            for(var i = 0; i < allUsers.length; i++){
-                if (allUsers[i].foto) {
-                    foto[i] = 'imgs/uploads/' + allUsers[i].foto;
-                } else {
-                    foto[i] = 'imgs/avatar.png';
-                }
-                console.log(foto[i])
-            };*/
-            //resolve({ allUsers: allUsers, foto: foto });
             resolve({ allUsers: allUsers });
         });
     });
@@ -90,9 +79,6 @@ exports.login = (req, res) => {
 
 // Update
 exports.updateUser = (id, nome, email, senha, foto, descricao, res) => {
-    /*Users.getUser(usuario_id, (usuario) => {
-    });*/
-
     console.log('\n updateUser:');
     console.log(id, nome, email, senha, foto, descricao);
 

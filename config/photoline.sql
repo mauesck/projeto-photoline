@@ -21,7 +21,7 @@ create table postagem (
     foreign key (user_id) references users(id)
 );
 
-select * from users;
+select * from postagem;
 
 alter table users modify descricao text character set utf8mb4;
 

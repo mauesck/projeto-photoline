@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/auth');
 const path = require('path');
+const { json } = require('body-parser');
 
 // Objetos do controller
 const User = require('../controller/usuario');
-const { json } = require('body-parser');
+const Postagem = require('../controller/postagem');
 
 // Recebe o id do user logado
 var usuario;
@@ -31,7 +32,6 @@ router.post('/user/update', (req, res) => {
     // Verifica se o arquivo de imagem foi enviado na solicitação
     if (!req.files || !req.files.foto) {
         if (req.body.foto === undefined) {
-            console.log('aqui');
             return res.redirect('/editarPerfil?error=Nenhuma foto a ser salva');
         }
     }
@@ -67,7 +67,27 @@ router.post('/user/update', (req, res) => {
 });
 
 // rotas postagem
+router.post('/postagem/create', (req, res) => {
+    console.log('\n /postagem/create \n');
 
+    if (!req.files || !req.files.imagem) {
+        return res.redirect('/postagem?error=Você precisa enviar uma foto!');
+    }
+
+    const { descricao, user_id } = req.body;
+
+    const imagem = req.files.imagem;
+    const extensao = imagem.name.split('.').pop();
+    const imagemName = 'iduser' + usuario.id + '-name' + usuario.nome + '-postagem' + req.body.descricao + '.' + extensao;
+
+    const uploadDir = path.join(__dirname, '..', 'public', 'imgs', 'uploads', 'posts');
+
+    imagem.mv(path.join(uploadDir, imagemName), (err) => {
+        Postagem.createPostagem(imagemName, descricao, user_id, res, (success) => {
+            return res.redirect('/perfil');
+        });
+    });
+});
 
 // --- rota efetuar Logout
 router.get('/logout', (req, res) => {
@@ -98,8 +118,26 @@ router.get('/cadastro', (req, res) => {
 });
 
 // --- renderizar pagina de publicação
-router.get('/postagem', (req, res) => {
-    res.render('postar');
+router.get('/postagem', async (req, res) => {
+    usuario = req.session.usuario;
+    if (!usuario) {
+        res.redirect('/');
+        return;
+    }
+
+    const error = req.query.error;
+
+    try {
+        const userDataPromise = User.getUser(req, res);
+
+        const [userData] = await Promise.all([userDataPromise]);
+
+        res.render('postar', { usuario: userData, error: error });
+
+    } catch (error) {
+        console.error('Erro ao renderizar a página:', error);
+        res.status(500).send('Erro ao renderizar a página');
+    }
 });
 
 // --- renderizar pagina de pesquisa
@@ -115,8 +153,6 @@ router.get('/pesquisa', async (req, res) => {
         const usersPromise = User.getAllUsers(req, res);
 
         const [userData, allUsers] = await Promise.all([userDataPromise, usersPromise]);
-
-        console.log(allUsers);
 
         res.render('pesquisa', { usuario: userData, allUsers: allUsers });
 
@@ -157,9 +193,14 @@ router.get('/perfil', async (req, res) => {
 
     try {
         const userDataPromise = User.getUser(req, res);
-        const [userData] = await Promise.all([userDataPromise]);
+        const postPromise = Postagem.getPostUser(req, res);
 
-        res.render('perfil', { usuario: userData });
+        const [userData] = await Promise.all([userDataPromise]);
+        const [post] = await Promise.all([postPromise]);
+
+        console.log(post);
+
+        res.render('perfil', { usuario: userData, post: post });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);
@@ -212,7 +253,5 @@ router.get('/feed', async (req, res) => {
         res.status(500).send('Erro ao renderizar a página');
     }
 });
-
-
 
 module.exports = router;
