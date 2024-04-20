@@ -35,10 +35,20 @@ exports.getUser = (req, res) => {
     });
 };
 
+exports.getUserName = (req, res) => {
+    return new Promise((resolve, reject) => {
+        const nome = req.query.nome;
+
+        Users.getNameUser(nome, (user) => {
+            resolve({ user: user });
+        });
+    });
+};
+
 exports.getUserPesquisado = (req, res) => {
     return new Promise((resolve, reject) => {
         usuario_id = req.query.id;
-        console.log(req.query)
+        //console.log(req.query)
 
         Users.getUser(usuario_id, (usuario) => {
             var foto;

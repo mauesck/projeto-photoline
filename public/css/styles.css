@@ -87,6 +87,11 @@ a {
         align-items: center;
     }
 
+    #menu nav{
+        padding-right: 10px;
+        background-color: #ddd;
+    }
+
     #logo {
         width: 100px;
         margin: 10px;
@@ -208,14 +213,14 @@ a {
 /* feed */
 #feed {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: start;
     align-items: center;
     margin-top: 60px;
 }
 
 .post {
-    width: 50%;
+    width: 35%;
     min-width: 300px;
 }
 
@@ -226,10 +231,14 @@ a {
 }
 
 .user-post img {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     padding: 2px;
     border-radius: 100%;
+}
+
+.user-post form{
+    margin: 0;
 }
 
 .user-post p {
@@ -244,10 +253,18 @@ a {
 
 .div-post p {
     padding: 10px;
+    text-align: start;
 }
 
 .div-post img {
     width: 100%;
+    height: 300px;
+    object-fit: cover; /* faz com que a imagem preencha completamente o elemento pai */
+    object-position: center; /* centraliza a imagem dentro do elemento pai */
+}
+
+#feed .bi{
+    font-size: 30px;
 }
 
 @media(max-width:1108px) {
@@ -318,7 +335,7 @@ textarea:focus {
 }
 
 .user-post {
-    min-width: 300px;
+    width: 100%;
 }
 
 .user-post i {
@@ -334,7 +351,8 @@ textarea:focus {
     border-color: #345C72;
     width: 75%;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
 }
@@ -342,17 +360,44 @@ textarea:focus {
 .bloco-post {
     margin: 10px;
     width: 300px;
+    height: 410px;
     background-color: white;
     border-radius: 5px;
+    position: relative;
 }
 
 .bloco-post img {
     width: 100%;
+    height: 270px;
+    object-fit: cover; /* faz com que a imagem preencha completamente o elemento pai */
+    object-position: center;
 }
 
 .bloco-post p {
     width: 100%;
     padding: 10px;
+    height: 90px;
+    overflow: auto;
+}
+
+.bloco-post .bi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 10px;
+    bottom: 0;
+    margin: 10px;
+}
+
+#perfilPublico .bloco-post .bi{
+    height: auto;
+    margin: 5px;
+    font-size: 30px;
+}
+
+#perfilPublico{
+    justify-content: start !important;
 }
 
 @media(max-width:1108px) {

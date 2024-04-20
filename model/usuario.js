@@ -17,6 +17,12 @@ exports.getUser = (id, callback) => {
     });
 };
 
+exports.getNameUser = (nome, callback) => {
+    db.query('SELECT * FROM users WHERE nome = ?', [nome], (err, rows) => {
+        if (err) throw err;
+        callback(rows);
+    });
+};
 
 exports.getAllUsers = (id, callback) => {
     db.query('SELECT * FROM users', (err, rows) => {
@@ -32,7 +38,6 @@ exports.getLogin = (email, senha, callback) => {
         callback(rows.length > 0 ? rows[0] : null);
     });
 };
-
 
 // Update
 exports.updateUser = (id, nome, email, senha, foto, descricao, callback) => {

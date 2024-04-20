@@ -12,3 +12,12 @@
             });
         });
     </script>
+
+
+
+                    <% var foto; %>
+                    <% if (users.allUsers.foto) { %>
+                        <% foto='imgs/uploads/' + users.allUsers.foto; %>
+                    <% } else { %>
+                        <% foto='imgs/avatar.png' ; %>
+                    <% } %>

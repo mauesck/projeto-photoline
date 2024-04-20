@@ -35,20 +35,29 @@
         </nav>
     </header>
     <main id="feed" class="main">
+        <% posts.posts.forEach(post => { %>
+        <hr style="width: 100%; margin: 30px;">
         <section class="post">
             <div class="user-post">
-                <img src="imgs/avatar.png" alt="user-post">
-                <% if (usuario) { %>
-                    <p> <%= usuario.nome %> </p>
-                    <% } %>
+                <% const user = users.allUsers.find(user => user.id === post.user_id); %>
+                <% const foto = user ? 'imgs/uploads/' + user.foto : 'imgs/avatar.png'; %>
+                <% const nome = user ? user.nome : 'no name'; %>
+                <form action="/perfilPublico" method="get" class="bloco-pesquisado">
+                    <img src="<%= foto %>" alt="user-post">
+                    <p><%= nome %></p>
+                    <input type="text" name="id" value="<%= user.id %>" style="display: none;">
+                    <input type="text" name="valida" value="perfilPublico" style="display: none;">
+                    <button type="submit">Ver perfil user</button>
+                </form>
+                <hr>
             </div>
             <div class="div-post">
-                <img src="imgs/pexels-johannes-plenio-2080960.jpg" alt="post">
-                <p>Está é a foto de uma paisagem linda, um simples pescador e seu barco desfrutando da beleza do planeta</p>
+                <img src="imgs/uploads/posts/<%= post.imagem %>" alt="post">
+                <p class="post-descricao"><%= post.descricao %></p>
             </div>
             <i class="bi bi-heart"></i>
         </section>
-        <hr style="width: 100%; margin: 30px;">
+        <% }); %>
     </main>
 </body>
 

@@ -1,5 +1,4 @@
 const Postagem = require('../model/postagem');
-const { post } = require('../routes');
 
 var usuario_id;
 
@@ -9,7 +8,7 @@ exports.createPostagem = (imagem, descricao, user_id, res) => {
     console.log(imagem, descricao, user_id);
 
     Postagem.createPostagem(imagem, descricao, user_id, (success) => {
-        res.redirect('/perfil');
+        res.redirect('/feed');
 
     });
 };
@@ -17,10 +16,44 @@ exports.createPostagem = (imagem, descricao, user_id, res) => {
 // Read
 exports.getPostUser = (req, res) => {
     return new Promise((resolve, reject) => {
-        usuario_id = req.session.usuario.id;
+        console.log(req.query);
+
+        if (req.query.valida === 'perfilPublico') {
+            usuario_id = req.query.id;
+        } else {
+            usuario_id = req.session.usuario.id;
+        }
 
         Postagem.getPostUser(usuario_id, (posts) => {
             resolve({ posts: posts });
         });
+    });
+};
+
+exports.getAllPosts = (req, res) => {
+    return new Promise((resolve, reject) => {
+        Postagem.getAllPosts((posts) => {
+            console.log('\n getAllPosts \n'); 
+            console.log(posts);
+
+            resolve({ posts: posts });
+        });
+    });
+};
+
+// Update
+exports.postagemUpdate = (req, res) => {
+    const { id, imagem, descricao, user_id } = req.body;
+
+    Postagem.postagemUpdate(id, imagem, descricao, user_id, (success) => {
+        res.redirect('/perfil');
+    });
+};
+
+// Delete
+exports.deletePostagem = (req, res) => {
+    const { id } = req.body;
+    Postagem.deletePostagem(id, (success) => {
+        res.redirect('/perfil');
     });
 };

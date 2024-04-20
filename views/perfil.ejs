@@ -40,23 +40,107 @@
             <a href="/logout" id="logout"><i class="bi bi-box-arrow-right"></i></a>
             <div class="user-post">
                 <img src="<%= usuario.foto %>" alt="user-post">
-                    <p> <%= usuario.usuario.nome %> </p>
+                <p>
+                    <%= usuario.usuario.nome %>
+                </p>
                 <a href="/editarPerfil"><i class="bi bi-pencil-square"></i></a>
             </div>
             <div id="user-desc">
-                <%= usuario.usuario.descricao %>                
+                <%= usuario.usuario.descricao %>
             </div>
         </section>
         <section id="area-posts">
-            <% post.posts.forEach(post =>{ %>
-            <div class="bloco-post">
-                <img src="imgs/uploads/posts/<%= post.imagem %>" alt="post">
-                <p><%= post.descricao %></p>
-                <i class="bi bi-heart"></i>
-            </div>
-            <% }); %>
+            <% post.posts.forEach(post=>{ %>
+                <div class="bloco-post">
+                    <p id="userId-<%= post.id %>" style="display: none;"><%= post.user_id %></p>
+                    <img id="imagem-<%= post.id %>" src="imgs/uploads/posts/<%= post.imagem %>" alt="<%= post.imagem %>">
+                    <p id="descricao-<%= post.id %>"><%= post.descricao %></p>
+                    <i class="bi bi-three-dots btn-secondary" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <div class="dropdown">
+                        <ul class="dropdown-menu">
+                            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    onclick="editDesc('<%= post.id %>')">Editar Descrição</button></li>
+                            <li><button class="dropdown-item deletar" data-bs-toggle="modal"
+                                    data-bs-target="#modal-deletar" onclick="deletePost('<%= post.id %>')">Excluir Post</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <% }); %>
         </section>
+
+        <!-- modal editar descricao -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="/postagem/update" method="post">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Descrição</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="int" name="id" id="form-id" style="display: none;">
+                            <input type="text" name="imagem" id="form-imagem" style="display: none;">
+                            <textarea name="descricao" id="form-desc" cols="30" rows="9" required style="width: 100%;"></textarea>
+                            <input type="int" name="user_id" id="form-user" style="display: none;">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal deletar -->
+        <div class="modal fade" id="modal-deletar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="/postagem/delete" method="post">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confimar Exclusão do Post?</h1>
+                        </div>
+                        <input type="int" name="id" id="inp-del-id" style="display: none;">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Confimar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
+
+    <script>
+        function editDesc(postId) {
+            const imagem = document.getElementById(`imagem-${postId}`).alt;
+            const descricao = document.getElementById(`descricao-${postId}`).textContent;
+            const userId = document.getElementById(`userId-${postId}`).textContent;
+
+            console.log(postId)
+            console.log(imagem)
+            console.log(descricao)
+            console.log(userId)
+
+            const formId = document.getElementById('form-id');
+            const formImagem = document.getElementById('form-imagem');
+            const formDesc = document.getElementById('form-desc');
+            const formUser = document.getElementById('form-user');
+
+            formId.value = postId;
+            formImagem.value = imagem;
+            formDesc.textContent = descricao;
+            formUser.value = userId;
+
+            console.log(formId.value);
+            console.log(formImagem.value);
+            console.log(formDesc.value);
+            console.log(formUser.value);
+        }
+
+        function deletePost(postId){
+            document.getElementById('inp-del-id').value = postId;
+        }
+    </script>
 
 </body>
 

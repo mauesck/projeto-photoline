@@ -88,6 +88,8 @@ router.post('/postagem/create', (req, res) => {
         });
     });
 });
+router.post('/postagem/update', Postagem.postagemUpdate);
+router.post('/postagem/delete', Postagem.deletePostagem);
 
 // --- rota efetuar Logout
 router.get('/logout', (req, res) => {
@@ -172,10 +174,12 @@ router.get('/perfilPublico', async (req, res) => {
 
     try {
         const usersPromise = User.getUserPesquisado(req, res);
+        const postPromise = Postagem.getPostUser(req, res);
 
         const [usuario] = await Promise.all([usersPromise]);
+        const [post] = await Promise.all([postPromise]);
 
-        res.render('perfilPublico', { usuario: usuario });
+        res.render('perfilPublico', { usuario: usuario, post: post });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);
@@ -242,11 +246,18 @@ router.get('/feed', async (req, res) => {
 
     try {
         // Executa as duas operações em paralelo
-        const userDataPromise = User.getUser(req, res);
+        const postsPromise = Postagem.getAllPosts(req, res);
+        const usersPromise = User.getAllUsers(req, res);
 
-        const [userData] = await Promise.all([userDataPromise]);
+        const [posts] = await Promise.all([postsPromise]);
+        const [users] = await Promise.all([usersPromise]);
 
-        res.render('feed', { usuario: userData });
+        console.log('\n feed \n');
+        // // console.log(posts);
+
+        console.log(users.allUsers);
+
+        res.render('feed', { users: users, posts: posts });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);
