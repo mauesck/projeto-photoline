@@ -55,7 +55,12 @@
                 <img src="imgs/uploads/posts/<%= post.imagem %>" alt="post">
                 <p class="post-descricao"><%= post.descricao %></p>
             </div>
-            <i class="bi bi-heart"></i>
+            <form action="/curtida/create" method="post" id="form-curtir">
+                <i id="heart" class="bi bi-heart"></i>
+                <input type="int" name="user_id" value="<%= usuario.id %>" style="display: none;">
+                <input type="int" name="post_id" value="<%= post.id %>" style="display: none;">
+                <button type="submit" style="opacity: 0;">Curtir</button>
+            </form>
         </section>
         <% }); %>
     </main>

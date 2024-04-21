@@ -24,13 +24,13 @@ create table postagem (
 
 create table curtidas (
 	id int auto_increment primary key,
-    quantidade int not null,
     user_id int,
     post_id int,
     foreign key (user_id) references users(id),
     foreign key (post_id) references postagem(id)
 );
 
+drop table curtidas;
 alter table postagem modify user_name varchar(250);
 alter table postagem add constraint fk_user_name foreign key (user_name) references users(nome);
 alter table postagem drop column user_name;

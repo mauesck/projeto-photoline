@@ -38,11 +38,11 @@
     <main id="perfilPublico" class="main">
         <section id="info-user">
             <div class="user-post">
-                <img src="<%= usuario.foto %>" alt="user-post">
-                <p> <%= usuario.usuario.nome %> </p>
+                <img src="<%= user.foto %>" alt="user-post">
+                <p> <%= user.usuario.nome %> </p>
             </div>
             <div id="user-desc">
-                <%= usuario.usuario.descricao %>
+                <%= user.usuario.descricao %>
             </div>
         </section>
         <section id="area-posts">
@@ -50,7 +50,12 @@
             <div class="bloco-post">
                 <img src="imgs/uploads/posts/<%=post.imagem%>" alt="post">
                 <p><%=post.descricao%></p>
-                <i class="bi bi-heart"></i>
+                <form action="/curtida/create" method="post" id="form-curtir">
+                    <i id="heart" class="bi bi-heart"></i>
+                    <input type="int" name="user_id" value="<%= usuario.id %>" style="display: none;">
+                    <input type="int" name="post_id" value="<%= post.id %>" style="display: none;">
+                    <button type="submit" style="opacity: 0;">Curtir</button>
+                </form>
             </div>
             <% }); %>
         </section>

@@ -7,6 +7,7 @@ const { json } = require('body-parser');
 // Objetos do controller
 const User = require('../controller/usuario');
 const Postagem = require('../controller/postagem');
+const Curtida = require('../controller/curtida');
 
 // Recebe o id do user logado
 var usuario;
@@ -90,6 +91,9 @@ router.post('/postagem/create', (req, res) => {
 });
 router.post('/postagem/update', Postagem.postagemUpdate);
 router.post('/postagem/delete', Postagem.deletePostagem);
+
+// rotas curtida
+router.post('/curtida/create', Curtida.createUser);
 
 // --- rota efetuar Logout
 router.get('/logout', (req, res) => {
@@ -176,10 +180,10 @@ router.get('/perfilPublico', async (req, res) => {
         const usersPromise = User.getUserPesquisado(req, res);
         const postPromise = Postagem.getPostUser(req, res);
 
-        const [usuario] = await Promise.all([usersPromise]);
+        const [user] = await Promise.all([usersPromise]);
         const [post] = await Promise.all([postPromise]);
 
-        res.render('perfilPublico', { usuario: usuario, post: post });
+        res.render('perfilPublico', { user: user, post: post, usuario: usuario });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);
@@ -252,12 +256,7 @@ router.get('/feed', async (req, res) => {
         const [posts] = await Promise.all([postsPromise]);
         const [users] = await Promise.all([usersPromise]);
 
-        console.log('\n feed \n');
-        // // console.log(posts);
-
-        console.log(users.allUsers);
-
-        res.render('feed', { users: users, posts: posts });
+        res.render('feed', { users: users, posts: posts, usuario: usuario });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);

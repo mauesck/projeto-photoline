@@ -33,9 +33,7 @@ exports.getPostUser = (req, res) => {
 exports.getAllPosts = (req, res) => {
     return new Promise((resolve, reject) => {
         Postagem.getAllPosts((posts) => {
-            console.log('\n getAllPosts \n'); 
-            console.log(posts);
-
+            
             resolve({ posts: posts });
         });
     });

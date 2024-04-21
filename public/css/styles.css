@@ -267,6 +267,22 @@ a {
     font-size: 30px;
 }
 
+#form-curtir{
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+#form-curtir button{
+    position: absolute;
+    background-color: #3333330e;
+    height: 40px;
+    width: 40px;
+}
+
 @media(max-width:1108px) {
     #feed {
         margin-top: 80px;
@@ -380,13 +396,16 @@ textarea:focus {
     overflow: auto;
 }
 
+.bloco-post #form-curtir{
+    top: 10px;
+}
+
 .bloco-post .bi{
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     height: 10px;
-    bottom: 0;
     margin: 10px;
 }
 
