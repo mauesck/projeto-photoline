@@ -34,8 +34,10 @@
             <a href="/perfil"><i class="bi bi-person-circle"></i>Perfil</a>
         </nav>
     </header>
+    <% let qtd = 0; %>
     <main id="feed" class="main">
         <% posts.posts.forEach(post => { %>
+            
         <hr style="width: 100%; margin: 30px;">
         <section class="post">
             <div class="user-post">
@@ -55,10 +57,22 @@
                 <img src="imgs/uploads/posts/<%= post.imagem %>" alt="post">
                 <p class="post-descricao"><%= post.descricao %></p>
             </div>
-            <form action="/curtida/create" method="post" id="form-curtir">
-                <i id="heart" class="bi bi-heart"></i>
-                <input type="int" name="user_id" value="<%= usuario.id %>" style="display: none;">
-                <input type="int" name="post_id" value="<%= post.id %>" style="display: none;">
+
+            <% const curtidasNoPost = curtidas.curtidas.filter(curtida => curtida.post_id === post.id); %>
+            <% qtd = curtidasNoPost.length; %>
+            
+            <% const curtidaDoUsuario = curtidasNoPost.find(curtida => curtida.user_id === usuario.id); %>
+            <% let userCurtida = curtidaDoUsuario ? true : false; %>
+            <% let idCurtida = curtidaDoUsuario ? curtidaDoUsuario.id : null; %>
+            
+            <% let heart = userCurtida ? 'bi-heart-fill' : 'bi-heart'; %>
+            <% let rota = userCurtida ? '/curtida/delete' : '/curtida/create'; %>
+
+            <form action="<%= rota %>" method="post" id="form-curtir">
+                <i id="heart" class="bi <%= heart %>"><p><%= qtd %></p></i>
+                <input type="hidden" name="user_id" value="<%= usuario.id %>">
+                <input type="hidden" name="post_id" value="<%= post.id %>">
+                <input type="hidden" name="id" value="<%= idCurtida %>">
                 <button type="submit" style="opacity: 0;">Curtir</button>
             </form>
         </section>

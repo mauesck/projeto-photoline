@@ -48,7 +48,6 @@ exports.getUserName = (req, res) => {
 exports.getUserPesquisado = (req, res) => {
     return new Promise((resolve, reject) => {
         usuario_id = req.query.id;
-        //console.log(req.query)
 
         Users.getUser(usuario_id, (usuario) => {
             var foto;
@@ -58,7 +57,7 @@ exports.getUserPesquisado = (req, res) => {
                 foto = 'imgs/avatar.png';
             }
 
-            resolve({ usuario: usuario, foto: foto });
+            resolve({ usuario: usuario, foto: foto});
         });
     });
 };

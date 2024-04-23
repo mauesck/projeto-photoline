@@ -27,15 +27,25 @@ create table curtidas (
     user_id int,
     post_id int,
     foreign key (user_id) references users(id),
-    foreign key (post_id) references postagem(id)
+    foreign key (post_id) references postagem(id) on update cascade on delete cascade
 );
 
+select * from postagem;
+
 drop table curtidas;
+
+ALTER TABLE curtidas
+ADD CONSTRAINT curtidas_ibfk_2 FOREIGN KEY (post_id) REFERENCES postagem(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE curtidas DROP FOREIGN KEY curtidas_ibfk_2;
+
 alter table postagem modify user_name varchar(250);
 alter table postagem add constraint fk_user_name foreign key (user_name) references users(nome);
 alter table postagem drop column user_name;
 
-select * from postagem;
+select * from curtidas where post_id = 6;
 
 alter table users modify descricao text character set utf8mb4;
 

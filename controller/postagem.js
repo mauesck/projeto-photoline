@@ -16,7 +16,6 @@ exports.createPostagem = (imagem, descricao, user_id, res) => {
 // Read
 exports.getPostUser = (req, res) => {
     return new Promise((resolve, reject) => {
-        console.log(req.query);
 
         if (req.query.valida === 'perfilPublico') {
             usuario_id = req.query.id;

@@ -93,7 +93,8 @@ router.post('/postagem/update', Postagem.postagemUpdate);
 router.post('/postagem/delete', Postagem.deletePostagem);
 
 // rotas curtida
-router.post('/curtida/create', Curtida.createUser);
+router.post('/curtida/create', Curtida.createCurtida);
+router.post('/curtida/delete', Curtida.deleteCurtida);
 
 // --- rota efetuar Logout
 router.get('/logout', (req, res) => {
@@ -179,11 +180,13 @@ router.get('/perfilPublico', async (req, res) => {
     try {
         const usersPromise = User.getUserPesquisado(req, res);
         const postPromise = Postagem.getPostUser(req, res);
+        const curtidasPromise = Curtida.getAllCurtidas(req, res);
 
         const [user] = await Promise.all([usersPromise]);
         const [post] = await Promise.all([postPromise]);
+        const [curtidas] = await Promise.all([curtidasPromise]);
 
-        res.render('perfilPublico', { user: user, post: post, usuario: usuario });
+        res.render('perfilPublico', { user: user, post: post, usuario: usuario, curtidas: curtidas });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);
@@ -252,11 +255,39 @@ router.get('/feed', async (req, res) => {
         // Executa as duas operações em paralelo
         const postsPromise = Postagem.getAllPosts(req, res);
         const usersPromise = User.getAllUsers(req, res);
+        const curtidasPromise = Curtida.getAllCurtidas(req, res);
 
         const [posts] = await Promise.all([postsPromise]);
         const [users] = await Promise.all([usersPromise]);
+        const [curtidas] = await Promise.all([curtidasPromise]);
 
-        res.render('feed', { users: users, posts: posts, usuario: usuario });
+        res.render('feed', { users: users, posts: posts, curtidas: curtidas, usuario: usuario });
+
+    } catch (error) {
+        console.error('Erro ao renderizar a página:', error);
+        res.status(500).send('Erro ao renderizar a página');
+    }
+});
+
+// --- renderizar page curtidas
+router.get('/curtidas', async (req, res) => {
+    usuario = req.session.usuario;
+    if (!usuario) {
+        res.redirect('/');
+        return;
+    }
+
+    try {
+
+        const postPromise = Postagem.getPostUser(req, res);
+        const curtidasPromise = Curtida.getAllCurtidas(req, res);
+        const usersPromise = User.getAllUsers(req, res);
+
+        const [post] = await Promise.all([postPromise]);
+        const [curtidas] = await Promise.all([curtidasPromise]);
+        const [users] = await Promise.all([usersPromise]);
+
+        res.render('curtidas', { post: post, usuario: usuario, curtidas: curtidas, users: users });
 
     } catch (error) {
         console.error('Erro ao renderizar a página:', error);
