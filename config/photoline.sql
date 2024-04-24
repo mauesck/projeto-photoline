@@ -16,7 +16,7 @@ create table users (
 create table postagem (
 	id int auto_increment primary key,
     imagem text not null,
-    descricao text,
+    descricao TEXT CHARACTER SET utf8mb4,
     user_id int,
     user_name VARCHAR(255), 
     foreign key (user_id) references users(id)
@@ -26,24 +26,20 @@ create table curtidas (
 	id int auto_increment primary key,
     user_id int,
     post_id int,
-    foreign key (user_id) references users(id),
+    foreign key (user_id) references users(id) on update cascade on delete cascade,
     foreign key (post_id) references postagem(id) on update cascade on delete cascade
 );
 
-select * from postagem;
+select * from users;
 
-drop table curtidas;
-
-ALTER TABLE curtidas
+ALTER TABLE postagem
 ADD CONSTRAINT curtidas_ibfk_2 FOREIGN KEY (post_id) REFERENCES postagem(id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE curtidas DROP FOREIGN KEY curtidas_ibfk_2;
 
-alter table postagem modify user_name varchar(250);
-alter table postagem add constraint fk_user_name foreign key (user_name) references users(nome);
-alter table postagem drop column user_name;
+alter table postagem modify descricao TEXT CHARACTER SET utf8mb4;
 
 select * from curtidas where post_id = 6;
 

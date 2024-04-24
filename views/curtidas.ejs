@@ -36,9 +36,6 @@
     </header>
     <main id="curtidas" class="main">
         <section>
-        <% console.clear(); %>
-        <% console.log(post.posts) %>
-        <% console.log(curtidas.curtidas) %>
         
         <% curtidas.curtidas.forEach(like => { %>
 
@@ -47,17 +44,17 @@
             <% console.log(postLike) %>
 
             <% const userLike = users.allUsers.find(user => user.id === like.user_id); %>
-            <% var userName = userLike ? userLike.nome : null %>
-            <% const userFoto = userLike ? userLike.foto : null %>
+            <% var userName = userLike.id === usuario.id ? 'Você' : userLike.nome %>
+            <% const userFoto = userLike.foto ? 'imgs/uploads/' + userLike.foto : 'imgs/avatar.png'; %>
+            
             <% console.log(userLike) %>
 
-            <% if(userLike.id === usuario.id){ userName = 'Você'; } %>
 
             <% if(postImagem){ %>
             <hr>
             <div class="bloco-publi-curtida">
                 <div>
-                    <img src="imgs/uploads/<%= userFoto %>" alt="">
+                    <img src="<%= userFoto %>" alt="<%= userFoto %>">
                     <p><strong><%= userName %></strong> curtiu sua publicação.</p>
                 </div>
                 <img class="publicacao" src="imgs/uploads/posts/<%= postImagem %>" alt="<%= postImagem %>">
@@ -65,6 +62,7 @@
             <% }; %>
             
         <% }) %>
+
         </section>
     </main>
 </body>

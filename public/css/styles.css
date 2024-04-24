@@ -57,13 +57,13 @@ a {
     color: #345C72;
 }
 
-#logout{
+#logout {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-#logout i{
+#logout i {
     font-size: 30px;
 }
 
@@ -87,7 +87,7 @@ a {
         align-items: center;
     }
 
-    #menu nav{
+    #menu nav {
         padding-right: 10px;
         background-color: #ddd;
     }
@@ -206,7 +206,7 @@ a {
     background-color: white;
 }
 
-.modal form{
+.modal form {
     max-width: none;
 }
 
@@ -237,7 +237,7 @@ a {
     border-radius: 100%;
 }
 
-.user-post form{
+.user-post form {
     margin: 0;
 }
 
@@ -259,21 +259,23 @@ a {
 .div-post img {
     width: 100%;
     height: 300px;
-    object-fit: cover; /* faz com que a imagem preencha completamente o elemento pai */
-    object-position: center; /* centraliza a imagem dentro do elemento pai */
+    object-fit: cover;
+    /* faz com que a imagem preencha completamente o elemento pai */
+    object-position: center;
+    /* centraliza a imagem dentro do elemento pai */
 }
 
-#feed .bi{
+#feed .bi {
     font-size: 30px;
     display: flex;
 }
 
-#feed .bi p{
+#feed .bi p {
     font-size: 15px;
     padding: 5px;
 }
 
-#form-curtir{
+#form-curtir {
     margin: 0;
     padding: 0;
     position: relative;
@@ -282,7 +284,7 @@ a {
     justify-content: center;
 }
 
-#form-curtir button{
+#form-curtir button {
     position: absolute;
     background-color: #3333330e;
     height: 40px;
@@ -391,7 +393,8 @@ textarea:focus {
 .bloco-post img {
     width: 100%;
     height: 270px;
-    object-fit: cover; /* faz com que a imagem preencha completamente o elemento pai */
+    object-fit: cover;
+    /* faz com que a imagem preencha completamente o elemento pai */
     object-position: center;
 }
 
@@ -402,11 +405,11 @@ textarea:focus {
     overflow: auto;
 }
 
-.bloco-post #form-curtir{
+.bloco-post #form-curtir {
     top: 10px;
 }
 
-.bloco-post .bi{
+.bloco-post .bi {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -415,13 +418,13 @@ textarea:focus {
     margin: 10px;
 }
 
-#perfilPublico .bloco-post .bi{
+#perfilPublico .bloco-post .bi {
     height: auto;
     margin: 5px;
     font-size: 30px;
 }
 
-#perfilPublico{
+#perfilPublico {
     justify-content: start !important;
 }
 
@@ -438,23 +441,32 @@ textarea:focus {
 
 /* pesquisa */
 
-#pesquisa{
+#pesquisa {
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 10px;
 }
 
-#form-pesquisa{
+#form-pesquisa {
     flex-direction: row;
     gap: 10px;
     min-width: 300px;
     width: 40%;
     padding: 0;
     margin-top: 50px;
+    position: relative;
 }
 
-#resultados-pesquisa{
+#pesquisa-resultados button{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0;
+}
+
+.resultados-pesquisa {
     min-width: 300px;
     max-width: 400px;
     width: 40%;
@@ -462,7 +474,7 @@ textarea:focus {
     padding: 10px;
 }
 
-.bloco-pesquisado{
+.bloco-pesquisado {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -472,21 +484,21 @@ textarea:focus {
     position: relative;
 }
 
-.bloco-pesquisado p{
+.bloco-pesquisado p {
     margin: 0;
 }
 
-.bloco-pesquisado img{
+.bloco-pesquisado img {
     width: 50px;
     height: 50px;
     border-radius: 100%;
 }
 
-.bloco-pesquisado hr{
+.bloco-pesquisado hr {
     width: 100%;
 }
 
-.bloco-pesquisado button{
+.bloco-pesquisado button {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -500,7 +512,7 @@ textarea:focus {
     justify-content: start;
 }
 
-#curtidas section{
+#curtidas section {
     display: flex;
     margin-top: 40px;
     flex-direction: column-reverse;
@@ -508,29 +520,29 @@ textarea:focus {
     width: 30%;
 }
 
-.bloco-publi-curtida{
+.bloco-publi-curtida {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
-.bloco-publi-curtida img{
+.bloco-publi-curtida img {
     width: 50px;
     height: 50px;
 }
 
-.bloco-publi-curtida div img{
+.bloco-publi-curtida div img {
     border-radius: 100%;
 }
 
-.bloco-publi-curtida div{
+.bloco-publi-curtida div {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.bloco-publi-curtida p{
+.bloco-publi-curtida p {
     margin: 5px;
 }

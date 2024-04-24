@@ -295,4 +295,21 @@ router.get('/curtidas', async (req, res) => {
     }
 });
 
+// --- renderizar page curtidas
+router.get('/pesquisaNome', async (req, res) => {
+    usuario = req.session.usuario;
+    if (!usuario) {
+        res.redirect('/');
+        return;
+    }
+
+    try {
+        const allUsers = await User.getAllUsers(req, res);
+        res.json(allUsers);
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao buscar usuários.' });
+    }
+});
+
+
 module.exports = router;

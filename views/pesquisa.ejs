@@ -36,12 +36,27 @@
     </header>
 
     <main id="pesquisa" class="main">
-        <form action="/perfilPublico" method="get" id="form-pesquisa">
-            <input type="text" name="nome" class="form-control" id="exampleInputEmail1"
-                placeholder="Pesquise alguém aqui">
-            <button type="submit" class="btn btn-primary">Buscar</button>
+        <form action="/pesquisaNome" method="get" id="form-pesquisa">
+            <input type="text" name="nome" class="form-control" id="campoPesquisa" placeholder="Pesquise alguém aqui" autocomplete="off">
+            <i class="bi bi-search"></i>
+            <style>
+                #campoPesquisa{
+                    border-radius: 30px;
+                }
+                #form-pesquisa .bi-search{
+                    position: absolute;
+                    right: 0;
+                    font-size: 15px;
+                    margin: 10px;
+                    color: #F46530;
+                }
+            </style>
         </form>
-        <section id="resultados-pesquisa">
+        
+        <div id="pesquisa-resultados" class="resultados-pesquisa"></div>
+       
+        <section class="resultados-pesquisa">
+            <h4 style="text-align: center; margin-bottom: 30px; color: #F46530;">Usuarios da Photoline</h4>
             <% allUsers.allUsers.forEach(usuario=> { %>
                 <form action="/perfilPublico" method="get" class="bloco-pesquisado">
                     <% var foto; %>
@@ -52,16 +67,90 @@
                     <% } %>
                     <img class="foto" src="<%= foto %>" alt="user pesquisado">
                     <p><%= usuario.nome %></p>
-                    <input type="text" name="id" value="<%= usuario.id %>" style="display: none;">
-                    <input type="text" name="valida" value="perfilPublico" style="display: none;">
+                    <input type="hidden" name="id" value="<%= usuario.id %>" style="display: none;">
+                    <input type="hidden" name="valida" value="perfilPublico" style="display: none;">
                     <button type="submit">Ver perfil user</button>
                 </form>
                 <hr>
-                <% }); %>
+            <% }); %>
         </section>
     </main>
 
     <script>
+
+        function buscarDados(nome) {
+            console.log(nome);
+            fetch(`/pesquisaNome?nome=${nome}`)
+                .then(response => response.json()) // Supondo que os dados sejam retornados em JSON
+                .then(users => {
+                    console.clear();
+                    
+
+                    // Filtrar os usuários que possuem a substring no nome
+                    const usuariosFiltrados = users.allUsers.filter(user => user.nome.toLowerCase().includes(nome.toLowerCase()));
+                    console.log(usuariosFiltrados);
+
+                    // Exibir os nomes dos usuários correspondentes
+                    const pesquisaResultados = document.getElementById('pesquisa-resultados');
+                    pesquisaResultados.innerHTML = '';
+
+                    usuariosFiltrados.forEach(user => {
+                        console.log(user.nome);
+
+                        const form = document.createElement('form');
+                        form.action = '/perfilPublico';
+                        form.method = 'get';
+                        form.classList = 'bloco-pesquisado';
+                        pesquisaResultados.appendChild(form);
+
+                        const img = document.createElement('img');
+                        img.classList = 'foto';
+                        const foto = user.foto? 'imgs/uploads/' + user.foto : 'imgs/avatar.png';
+                        img.src = foto;
+                        img.alt = 'user pesquisado';
+                        form.appendChild(img);
+
+                        const nome = document.createElement('p');
+                        nome.textContent = user.nome;
+                        form.appendChild(nome);
+
+                        const inputId = document.createElement('input');
+                        inputId.type = 'hidden';
+                        inputId.name = 'id';
+                        inputId.value = user.id;
+                        form.appendChild(inputId);
+
+                        const inputValida = document.createElement('input');
+                        inputValida.type = 'hidden';
+                        inputValida.name = 'valida';
+                        inputValida.value = 'perfilPublico';
+                        form.appendChild(inputValida);
+
+                        const button = document.createElement('button');
+                        button.type = 'submit';
+                        button.textContent = 'Ver perfil user';
+                        form.appendChild(button);
+
+                        const hr = document.createElement('hr');
+                        pesquisaResultados.appendChild(hr);
+                    });
+
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);
+                });
+        }
+
+        // Adicionar evento de escuta ao campo de entrada
+        document.getElementById('campoPesquisa').addEventListener('input', function () {
+            const nome = this.value; // Obter o valor do campo de pesquisa
+            if (nome.length > 0) {
+                buscarDados(nome);
+            }else{
+                const pesquisaResultados = document.getElementById('pesquisa-resultados');
+                pesquisaResultados.innerHTML = '';
+            }
+        });
 
         // fetch('/user/allRead')
         //     .then(response => {
